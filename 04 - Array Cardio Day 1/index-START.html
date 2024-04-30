@@ -38,17 +38,31 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifthteens = inventors.filter((inv) => inv["year"] < 1600 && inv["year"] >= 1500);
+    
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const firstLastNames = inventors.map((inv) => inv["first"] + ", " + inv["last"]);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const sortedInventorsBirthday= inventors.sort((a, b) => a["year"] > b["year"] ? 1 : -1);
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
+    console.table(ordered);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const sumYearsLived = inventors.reduce((total, initialItem) => total + (initialItem["passed"] - initialItem["year"]), 0);
 
     // 5. Sort the inventors by years lived
+    const sortedInventorsByYearsLived = inventors.sort((last, next) => {
+      const lastInventorAge = (last["passed"] - last["year"]);
+      const nextInventorAge = (next["passed"] - next["year"]);
+
+      return lastInventorAge > nextInventorAge ? 1 : -1;
+    });
+    console.table(sortedInventorsByYearsLived);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -56,11 +70,26 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const peopleByAlphabetic = people.sort((last, next) => {
+      const [aLast, aFirst] = last.split(', ');
+      const [bLast, bFirst] = next.split(', ');
+      return aLast > bLast ? 1 : -1;
+    });
+    console.log(peopleByAlphabetic);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    // i got a wrong interpretation but i will leave the 'wrong' code behing because it ended up being a good exercise
+    //const sumInstancesOfData = data.reduce((reductor, currentElement) => reductor.includes(currentElement) ? reductor : [...reductor, currentElement], [])
+    //console.log(sumInstancesOfData.length);
+    const sumInstancesOfData = data.reduce(function(reductor, currentElement){
+      if(!reductor[currentElement]){
+        reductor[currentElement] = 0;
+      } 
+      reductor[currentElement]++;
+      return reductor;
+    }, {});
   </script>
 </body>
 </html>
